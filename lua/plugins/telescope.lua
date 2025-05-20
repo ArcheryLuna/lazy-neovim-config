@@ -12,6 +12,12 @@ return {
 			vim.keymap.set("n", "<leader>fs", function()
 				builtin.grep_string({ search = vim.fn.input("Grep > ") })
 			end)
+
+			vim.keymap.set("n", "<leader>ns", function()
+				builtin.find_files({ cwd = vim.fn.stdpath("config") })
+			end, {
+				desc = "[N]eovim [S]earch files",
+			})
 		end,
 	},
 	{
