@@ -33,6 +33,7 @@ return {
 				"eslint",
 				"tailwindcss",
 				"rust_analyzer",
+				"biome",
 			},
 		},
 	},
@@ -43,8 +44,25 @@ return {
 		"jay-babu/mason-null-ls.nvim",
 		dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
 		opts = {
-			ensure_installed = { "black", "eslint", "mypy", "ruff", "prettier", "debugpy", "stylua", "eslint_d" },
+			ensure_installed = {
+				"black",
+				"eslint",
+				"mypy",
+				"ruff",
+				"prettier",
+				"debugpy",
+				"stylua",
+				"eslint_d",
+				"biome",
+			},
 			automatic_installation = true,
+			methods = {
+				diagnostics = true,
+				formatting = true,
+				code_actions = true,
+				completion = true,
+				hover = true,
+			},
 		},
 	},
 	{
@@ -197,8 +215,6 @@ return {
 					}),
 					require("none-ls.diagnostics.ruff"), -- ← NEW
 					null_ls.builtins.formatting.prettier,
-					require("none-ls.code_actions.eslint"),
-					require("none-ls.diagnostics.eslint"),
 				},
 				on_attach = function(client, bufnr)
 					lsp.on_attach(client)
