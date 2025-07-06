@@ -36,23 +36,45 @@ return {
 			},
 		},
 	},
-
+	---------------------------------------------------------------------------
+	-- mason-null-ls ---------------------------------------------------------
+	---------------------------------------------------------------------------
+	{
+		"jay-babu/mason-null-ls.nvim",
+		dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
+		opts = {
+			ensure_installed = { "black", "eslint", "mypy", "ruff", "prettier", "debugpy", "stylua", "eslint_d" },
+			automatic_installation = true,
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+	},
 	---------------------------------------------------------------------------
 	-- LSP‑Zero ---------------------------------------------------------------
 	---------------------------------------------------------------------------
 	{
 		"VonHeikemen/lsp-zero.nvim",
-		branch = "v3.x",
+		branch = "v4.x",
 		dependencies = {
-			"neovim/nvim-lspconfig",
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
+			"neovim/nvim-lspconfig",
 			-- completion
 			"hrsh7th/nvim-cmp",
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-buffer",
 			"L3MON4D3/LuaSnip",
+			{
+				"folke/lazydev.nvim",
+				ft = "lua",
+				opts = {
+					library = {
+						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+					},
+				},
+			},
 		},
 		config = function()
 			local lsp = require("lsp-zero")
@@ -63,8 +85,12 @@ return {
 				local o = { buffer = bufnr }
 				map("n", "gd", vim.lsp.buf.definition, o)
 				map("n", "K", vim.lsp.buf.hover, o)
-				map("n", "[d", vim.diagnostic.goto_next, o)
-				map("n", "]d", vim.diagnostic.goto_prev, o)
+				map("n", "[d", function()
+					vim.diagnostic.jump({ count = 1, float = true })
+				end, o)
+				map("n", "]d", function()
+					vim.diagnostic.jump({ count = -1, float = true })
+				end, o)
 				map("n", "<leader>ca", vim.lsp.buf.code_action, o)
 				map("i", "<C-h>", vim.lsp.buf.signature_help, o)
 			end)
@@ -175,7 +201,7 @@ return {
 					require("none-ls.diagnostics.eslint"),
 				},
 				on_attach = function(client, bufnr)
-					lsp.on_attach(client, bufnr)
+					lsp.on_attach(client)
 					if client.supports_method("textDocument/formatting") then
 						local aug = vim.api.nvim_create_augroup("LspFormat", { clear = true })
 						vim.api.nvim_create_autocmd("BufWritePre", {
@@ -189,17 +215,5 @@ return {
 				end,
 			}
 		end,
-	},
-
-	---------------------------------------------------------------------------
-	-- mason-null-ls ---------------------------------------------------------
-	---------------------------------------------------------------------------
-	{
-		"jay-babu/mason-null-ls.nvim",
-		dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
-		opts = {
-			ensure_installed = { "black", "eslint", "mypy", "ruff", "prettier", "debugpy", "stylua", "eslint_d" },
-			automatic_installation = true,
-		},
 	},
 }

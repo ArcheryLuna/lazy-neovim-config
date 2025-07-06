@@ -20,16 +20,28 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 vim.opt.termguicolors = true
-vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
+--vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
 
 vim.opt.scrolloff = 8
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "0"
+
+vim.diagnostic.config({
+	virtual_text = true,
+	signs = true,
+	float = {
+		focusable = false,
+		style = "minimal",
+		border = "rounded",
+		source = true,
+		header = "",
+		prefix = "",
+	},
+})
 
 -- Vim Autocommands ---
 

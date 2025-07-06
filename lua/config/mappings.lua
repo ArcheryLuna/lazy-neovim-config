@@ -69,7 +69,7 @@ end, {
 })
 
 -- Open Neotree
-vim.keymap.set("n", "<leader>n", "<cmd> Neotree filesystem reveal left<CR>", {
+vim.keymap.set("n", "<leader>n", "<cmd> Neotree toggle<CR>", {
 	desc = "Open Neotree on the left",
 })
 
