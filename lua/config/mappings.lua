@@ -5,6 +5,8 @@ vim.g.maplocalleader = "\\"
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected line(s) down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected line(s) up" })
 
+-- vim.keymap.set("n", "<leader>e", vim.cmd.Ex, { desc = "Open's netrw" })
+
 -- Save file
 vim.keymap.set("n", "<C-s>", vim.cmd.w, { desc = "Save file" })
 
@@ -66,11 +68,6 @@ vim.keymap.set("n", "<leader><leader>", function()
 	vim.cmd("so")
 end, {
 	desc = "Source this file",
-})
-
--- Open Neotree
-vim.keymap.set("n", "<leader>n", "<cmd> Neotree toggle<CR>", {
-	desc = "Open Neotree on the left",
 })
 
 -- Unbinding the arrow keys, to get used to hjkl navigation on my newer keyboard
